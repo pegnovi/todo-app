@@ -1,13 +1,21 @@
 import React from 'react';
-import { TodoList } from './TodoList';
-import { AddTodoForm } from './AddTodoForm';
+import {applyMiddleware, createStore} from 'redux';
+import { Provider } from 'react-redux';
+import TodoList from './TodoList';
+import TodoForm from './TodoForm';
+
+import allReducers from '../reducers'; // index.js of directory
+
+const store = createStore(allReducers);
 
 export function MainPage() {
 	return (
-		<div>
-			<TodoList/>
+		<Provider store={store}>
+			<div>
+				<TodoList/>
 
-			<AddTodoForm/>
-		</div>
+				<TodoForm/>
+			</div>
+		</Provider>
 	);
 }
