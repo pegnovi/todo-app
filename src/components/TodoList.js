@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
+import TodoForm from './TodoForm';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -25,6 +26,9 @@ class TodoList extends Component {
 						})
 					}
 				</ol>
+
+				<TodoForm onSubmit={(todo) => props.addTodo(todo)}/>
+
 			</div>
 		);
 	}

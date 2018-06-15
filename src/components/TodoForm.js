@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as todoActions from '../actions/todoActions';
-
-class TodoForm extends Component {
+export default class TodoForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -20,7 +15,8 @@ class TodoForm extends Component {
 				<h2>Add a todo</h2>
 				<form onSubmit={(e) => {
 					e.preventDefault();
-					props.addTodo(state);
+					props.onSubmit(state);
+					this.setState({task: ''});
 				}}>
 					<div>
 						<label>Task: </label><input onChange={(e) => this.setState({task: e.target.value})} value={state.task}></input>
@@ -32,8 +28,3 @@ class TodoForm extends Component {
 	}
 }
 
-function mapDispatchToProps(dispatch){
-	return bindActionCreators(todoActions, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(TodoForm);
