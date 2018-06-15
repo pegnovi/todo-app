@@ -10,10 +10,10 @@ export const addTodo = (todo) => {
 	};
 }
 
-export const getTodos = () => {
+export const getTodos = (todos) => {
 	return {
 		type: GET_TODOS,
-		payload: [] // temp (will be async call)
+		payload: todos // temp (will be async call)
 	};
 }
 

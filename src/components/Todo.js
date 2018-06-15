@@ -1,49 +1,69 @@
 import React, { Component } from 'react';
 
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as todoActions from '../actions/todoActions';
-
-class Todo extends Component {
+export default class Todo extends Component {
 	constructor(props) {
 		super(props);
 
 		// initialize app state
 		this.state = {
-			readOnlyMode: props.readOnlyMode,
+			editMode: false,
 			task: props.task
 		};
+
+		//https://reactjs.org/docs/handling-events.html
+		this.setTask = this.setTask.bind(this);
+		this.setEditMode = this.setEditMode.bind(this);
+		this.setReadOnlyMode = this.setReadOnlyMode.bind(this);
+		this.onEditClick = this.onEditClick.bind(this);
+		this.onTaskChange = this.onTaskChange.bind(this);
+		this.onUpdateClick = this.onUpdateClick.bind(this);
+		this.onCancelClick = this.onCancelClick.bind(this);
+		this.onDeleteClick = this.onDeleteClick.bind(this);
+
+	}
+	setTask(task) {
+		this.setState({task: task});
+	}
+	setEditMode() {
+		this.setState({editMode: true});
+	}
+	setReadOnlyMode() {
+		this.setState({editMode: false});
+	}
+	onEditClick() {
+		this.setEditMode();
+	}
+	onTaskChange(e) {
+		this.setTask(e.target.value);
+	}
+	onUpdateClick() {
+		this.setReadOnlyMode();
+		this.props.updateTodo({task: this.state.task});
+	}
+	onCancelClick() {
+		this.setTask(this.props.task);
+		this.setReadOnlyMode();
+	}
+	onDeleteClick() {
+		this.props.deleteTodo();
 	}
 	render() {
 		const props = this.props;
 		const state = this.state;
-		const task = props.task;
-		const subTasks = props.subTasks;
-		const index = props.index;
 		return (<span>
-			{state.readOnlyMode ? 
+			{state.editMode ? 
 				<span>
-					<h3 style={{display: 'inline'}}>{task}</h3>
-					<input onChange={(e) => this.setState({task: e.target.value})} value={state.task}></input>
-					<button onClick={() => props.updateTodo(index, {task: state.task})}>Update</button>
-					<button onClick={() => props.deleteTodo(index)}>Delete</button>
-				{/*
-					<ol>
-						{subTasks.map((subTask, index) => <li key={`${task}-${index}`}>{subTask}</li>)}
-					</ol>
-				*/}
+					<input onChange={this.onTaskChange} value={state.task}></input>
+					<button onClick={this.onUpdateClick}>Update</button>
+					<button onClick={this.onCancelClick}>Cancel</button>
 				</span>
 				:
 				<span>
-					'editable form'
+					<h3 style={{display: 'inline'}}>{props.task}</h3>
+					<button onClick={this.onEditClick}>Edit</button>
+					<button onClick={this.onDeleteClick}>Delete</button>
 				</span>
 			}
 		</span>);
 	}
 }
-
-function mapDispatchToProps(dispatch){
-	return bindActionCreators(todoActions, dispatch);
-}
-
-export default connect(null, mapDispatchToProps)(Todo);

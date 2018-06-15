@@ -9,10 +9,8 @@ export default function(state = [], action) {
 			nextState.push(action.payload);
 			return nextState;
 		case GET_TODOS:
-			nextState = action.payload;
-			return nextState;
+			return action.payload;
 		case UPDATE_TODO:
-			console.log(action.payload);
 			nextState[action.payload.index] = action.payload.todo;
 			return nextState;
 		case DELETE_TODO:
