@@ -1,4 +1,4 @@
-import { ADD_TODO, GET_TODOS, UPDATE_TODO, DELETE_TODO } from '../actions/todoActions';
+import { ADD_TODO, SET_TODOS, UPDATE_TODO, DELETE_TODO } from '../actions/todoActions';
 import { cloneDeep } from 'lodash';
 
 export default function(state = [], action) {
@@ -8,7 +8,7 @@ export default function(state = [], action) {
 		case ADD_TODO:
 			nextState.push(action.payload);
 			return nextState;
-		case GET_TODOS:
+		case SET_TODOS:
 			return action.payload;
 		case UPDATE_TODO:
 			nextState[action.payload.index] = action.payload.todo;

@@ -51,7 +51,7 @@ export default class Todo extends Component {
 		const props = this.props;
 		const state = this.state;
 		return (<span>
-			{state.editMode ? 
+			{state.editMode ?
 				<span>
 					<input onChange={this.onTaskChange} value={state.task}></input>
 					<button onClick={this.onUpdateClick}>Update</button>

@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as todoActions from '../actions/todoActions';
 
-
 class TodoList extends Component {
 	render() {
 		const props = this.props;
@@ -20,14 +19,16 @@ class TodoList extends Component {
 							return <li key={`todo-${index}`}>
 								<Todo
 									{...todo}
-									updateTodo={(nuTodo) => props.updateTodo(index, nuTodo)}
-									deleteTodo={() => props.deleteTodo(index)}/>
+									updateTodo={(nuTodo) => props.updateTodoAsync(index, nuTodo)}
+									deleteTodo={() => props.deleteTodoAsync(index, todo.id)}
+								/>
 							</li>
 						})
 					}
 				</ol>
 
-				<TodoForm onSubmit={(todo) => props.addTodo(todo)}/>
+				<TodoForm onSubmit={(todo) => props.addTodoAsync(todo)}/>
+				{/* onSubmit={(todo) => props.addTodo(todo)}/> */}
 
 			</div>
 		);
